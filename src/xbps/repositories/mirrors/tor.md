@@ -1,63 +1,49 @@
-# Using Tor Mirrors
+# 使用 Tor 镜像
 
-Tor is an anonymizing software that bounces traffic via computers all around the
-world. It can provide access to regular sites on the internet or to hidden sites
-only available on the network.
+Tor是一个匿名软件，它通过世界各地的志愿者的计算机提供流量，可以提供访问互联网上的常规网站或隐藏的网站。
 
-The following Void Linux Mirrors are available on the Tor Network:
+以下是 Void 设在 Tor 上的镜像源:
 
 | Repository                                                                             | Location   |
 |----------------------------------------------------------------------------------------|------------|
 | <http://lysator7eknrfl47rlyxvgeamrv7ucefgrrlhk7rouv3sna25asetwid.onion/pub/voidlinux/> | EU: Sweden |
 
-## Using XBPS with Tor
+## 在 Tor 下使用 xbps
 
-XBPS can be made to connect to mirrors using Tor. These mirrors can be normal
-mirrors, via exit relays, or, for potentially greater anonymity, hidden service
-mirrors on the network.
+XBPS可以使用Tor连接到镜像。这些镜像可以是普通的镜像，通过出口中继，亦或为了匿名性而在网络上隐藏服务镜像。
 
-XBPS respects the `SOCKS_PROXY` environment variable, which makes it easy to use
-via Tor.
+XBPS可以通过设置走 `SOCKS_PROXY` 环境变量,从而在 Tor 下使用 XBPS
 
-### Installing Tor
+### 安装 Tor
 
-Tor is contained in the `tor` package.
+Tor 在 `tor` 软件包中提供
 
-After having installed Tor, you can start it as your own user:
+安装Tor以后,用个人用户身份启动之:
 
 ```
 $ tor
 ```
 
-or enable its system service.
+或者设置其跟随系统启动.
 
-By default, Tor will act as a client and open a SOCKS5 proxy on TCP port 9050 on
-localhost.
+默认情况下，Tor将作为一个客户端，并在TCP端口9050上打开一个SOCKS5代理。
 
-### Making XBPS connect via the SOCKS proxy
+### 让XBPS走socks5代理
 
-XBPS reads the `SOCKS_PROXY` environment variable and will use any proxy
-specified in it. By simply setting the variable to the address and port of the
-proxy opened by the Tor client, all XBPS's connections will go over the Tor
-network.
+XBPS会读取`SOCKS_PROXY`环境变量并使用其中指定的任何代理。中指定的任何代理。通过简单地将该变量设置为Tor客户端打开的代理的地址和端口，XBPS的所有连接将通过Tor进行。
 
-An example upgrading your system over Tor:
+一个通过Tor升级系统的例子:
 
 ```
 # export SOCKS_PROXY="socks5://127.0.0.1:9050"
 # xbps-install -Su
 ```
 
-### Using a hidden service mirror
+###使用暗网镜像源
 
-To use a hidden service mirror, the default mirrors need to be overwritten with
-configuration files pointing to `.onion`-addresses that are used internally on
-the Tor network. XBPS allows overriding repository addresses under
-`/etc/xbps.d`.
+要使用隐藏的服务镜像，默认的镜像需要被覆盖到指向内部使用的".onion "地址的配置文件来覆盖默认镜像。镜像需要用指向 Tor 网络内部使用的".onion "地址的配置文件来覆盖。XBPS 允许覆盖仓库地址 `/etc/xbps.d`。
 
-Copy your repository files from `/usr/share/xbps.d` to `/etc/xbps.d` and replace
-the addresses with that of an onion service (Lysator's onion used as an
-example):
+将你的镜像文件从`/usr/share/xbps.d`复制到`/etc/xbps.d`，并将地址替换为Tor网站的地址（以Lysator的Tor地址为例):
 
 ```
 # mkdir -p /etc/xbps.d
@@ -65,11 +51,9 @@ example):
 # sed -i 's|https://repo-default.voidlinux.org|http://lysator7eknrfl47rlyxvgeamrv7ucefgrrlhk7rouv3sna25asetwid.onion/pub/voidlinux|g' /etc/xbps.d/*-repository-*.conf
 ```
 
-Tor provides layered end-to-end encryption so HTTPS is not necessary.
+Tor提供了分层的端到端加密，所以HTTPS是不必要的。(译者注:https还是有必要的)
 
-When installing packages, with `SOCKS_PROXY` set like the earlier example, XBPS
-should indicate that it is synchronizing the repositories from the onion address
-specified in the override:
+在安装软件包时，如果像前面的例子那样设置了 `SOCKS_PROXY`，XBPS应该会指出它正在从指定的暗网地址进行同步。
 
 ```
 # xbps-install -S
@@ -79,14 +63,12 @@ aarch64-repodata: 4030B [avg rate: 54KB/s]
 aarch64-repodata: 1441KB [avg rate: 773KB/s]
 ```
 
-### Security consideration
+### 安全建议
 
-It is advisable to set `SOCKS_PROXY` automatically in your environment if you
-are using an onion. If the setting is missing, a DNS query for the name of the
-hidden service will leak to the configured DNS server.
+如果你使用暗网，建议在你的环境中自动设置`SOCKS_PROXY`。如果没有这个设置，隐蔽服务的DNS查询会泄露给配置的DNS服务器。
 
-To automatically set the environment variable, add it to a file in
-`/etc/profile.d`:
+要自动设置环境变量，请将其添加到
+`/etc/profile.d`的文件中:
 
 ```
 # cat - <<EOF > /etc/profile.d/socksproxy.sh
