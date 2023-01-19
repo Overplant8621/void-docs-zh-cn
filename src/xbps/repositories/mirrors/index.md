@@ -1,37 +1,28 @@
-# Mirrors
+# 镜像源
 
-Void Linux maintains mirrors in several geographic regions for you to use. A
-fresh install will default to using the master mirror in Europe, but you may
-also [select a different mirror](./changing.md) manually.
+Void Linux在几个地理区域都有镜像供你使用。一个新的安装将默认使用欧洲的主镜像，但你也可以 [选择一个不同的镜像]（./changing.md）
+## 一级镜像
 
-## Tier 1 mirrors
+第1级镜像由Void Linux基础设施团队维护。这些镜像直接从构建主站同步，并且总是有最新的软件包。
 
-Tier 1 mirrors are maintained by the Void Linux Infrastructure Team. These
-mirrors sync directly from the build-master and will always have the latest
-packages available.
+默认情况下，XBPS将联系<https://repo-default.voidlinux.org>，它可以映射到任何一级镜像。
 
-By default XBPS will reach out to <https://repo-default.voidlinux.org> which may
-map to any tier 1 mirror.
-
-| Repository                                     | Location         |
+| 镜像源                                          | 地区              | 
 |------------------------------------------------|------------------|
-| <https://repo-fi.voidlinux.org/>               | EU: Finland      |
-| <https://mirrors.servercentral.com/voidlinux/> | USA: Chicago     |
-| <https://repo-us.voidlinux.org/>               | USA: Kansas City |
-| <https://repo-de.voidlinux.org/>               | EU: Germany      |
+| <https://repo-fi.voidlinux.org/>               | 欧洲: 芬兰          |
+| <https://mirrors.servercentral.com/voidlinux/> | 美国: 芝加哥        |
+| <https://repo-us.voidlinux.org/>               | 美国: 堪萨斯       |
+| <https://repo-de.voidlinux.org/>               | 欧洲: 德国          |
 
-## Tier 2 mirrors
+## 二级镜像
 
-Tier 2 mirrors sync from a nearby Tier 1 mirror when possible. These mirrors are
-not managed by Void and do not have any guarantees of freshness or completeness
-of packages, nor are they required to sync every available architecture or
-sub-repository.
+在可能的情况下，第2级镜像从附近的第1级镜像同步。这些镜像不是由Void管理的，也不保证软件包的新度和完整性,也不要求它们同步每个可用的架构或子库。
 
-### Globally-available mirrors
+### 全球镜像
 
 | Repository                                         | Location          |
 |----------------------------------------------------|-------------------|
-| <https://mirror.ps.kz/voidlinux/>                  | Asia: Almaty, KZ  |
+| <https://mirror.ps.kz/voidlinux/>                  | 亚洲: 哈萨克斯坦            |
 | <https://mirrors.bfsu.edu.cn/voidlinux/>           | Asia: China       |
 | <https://mirrors.cnnic.cn/voidlinux/>              | Asia: China       |
 | <https://mirrors.tuna.tsinghua.edu.cn/voidlinux/>  | Asia: China       |
